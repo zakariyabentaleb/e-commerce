@@ -7,6 +7,8 @@
     <title>{{ config('app.name', 'E-Commerce') }}</title>
     <!-- Styles -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
     @stack('styles')
 </head>
 <body class="font-sans antialiased">
@@ -44,30 +46,29 @@
                         <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-600">Connexion</a>
                         <a href="{{ route('register') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">S'inscrire</a>
                     @else
-                        <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" class="flex items-center text-gray-700 hover:text-blue-600">
-                                <span class="mr-1">{{ Auth::user()->name }}</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                            
-                            <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
-                                <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mon profil</a>
-                                <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mes commandes</a>
-                                
-                                @if(Auth::user()->is_admin)
-                                    <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Administration</a>
-                                @endif
-                                
-                                <form method="POST" action="">
-                                    @csrf
-                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        Déconnexion
-                                    </button>
-                                </form>
-                            </div>
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="flex items-center text-gray-700 hover:text-blue-600">
+                            <span class="mr-1">{{ Auth::user()->name }}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mon profil</a>
+                            <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mes commandes</a>
+                            @if(Auth::user()->is_admin)
+                                <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Administration</a>
+                            @endif
+                            <form method="POST" action="">
+                                @csrf
+                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    Déconnexion
+                                </button>
+                            </form>
                         </div>
+                    </div>
+                    
                     @endguest
                     
                     <!-- Mobile menu button -->
